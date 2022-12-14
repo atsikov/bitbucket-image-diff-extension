@@ -1,0 +1,399 @@
+<head>
+  <style>
+    :root {
+      --active-tab-color: #0052cc;
+      --inactive-tab-color: #42526e;
+
+      --secondary-color: rgb(235, 236, 240);
+
+      --tab-width: 150px;
+      --tab-height: 44px;
+
+      --diff-overlay-opacity: 0.5;
+    }
+
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    }
+
+    .diff-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .diff-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .diff-panel {
+      padding-top: 8px;
+      width: 100%;
+      display: flex;
+      height: max-content;
+      justify-content: center;
+    }
+
+    .diff-item-container {
+      line-height: 1.5rem;
+      padding: 16px;
+      flex: 1;
+      text-align: center;
+    }
+
+    .diff-item-before {
+      background: rgb(255, 235, 230);
+      color: rgb(191, 38, 0);
+    }
+
+    .diff-item-after {
+      background: rgb(227, 252, 239);
+      color: rgb(0, 102, 68);
+    }
+
+    .diff-item-image {
+      margin: 16px 0px;
+      border: 3px solid;
+      border-radius: 3px;
+      max-width: calc(50vw - 32px);
+      max-height: calc(100vh - 160px);
+      background-size: 20px 20px;
+      background-position: 0px 0px, 0px 10px, 10px -10px, -10px 0px;
+      background-image: linear-gradient(
+          45deg,
+          rgb(244, 245, 247) 25%,
+          transparent 25%
+        ),
+        linear-gradient(-45deg, rgb(244, 245, 247) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgb(244, 245, 247) 75%),
+        linear-gradient(-45deg, white 75%, rgb(244, 245, 247) 75%);
+    }
+
+    .diff-difference .diff-item-image {
+      margin-top: calc(16px + 1.5rem);
+    }
+
+    .diff-overlay {
+      position: relative;
+    }
+
+    .diff-overlay .diff-item-before .diff-item-image {
+      margin-top: calc(16px + 1.5rem);
+    }
+
+    .diff-overlay .diff-item-after {
+      position: absolute;
+      background-color: transparent;
+      color: rgb(191, 38, 0);
+      width: 100%;
+    }
+
+    .diff-overlay .diff-item-after .diff-item-image {
+      opacity: var(--diff-overlay-opacity);
+    }
+
+    .tabs {
+      display: flex;
+      position: relative;
+      background-color: #f4f5f7;
+      box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15),
+        0 6px 12px 0 rgba(24, 94, 224, 0.15);
+      padding: 4px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+    .tabs * {
+      z-index: 2;
+    }
+
+    input[type='radio'] {
+      display: none;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--inactive-tab-color);
+      width: var(--tab-width);
+      height: var(--tab-height);
+      font-size: 1rem;
+      font-weight: 400;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.15s ease-in;
+    }
+
+    input[type='radio']:checked + label {
+      color: var(--active-tab-color);
+      font-weight: 500;
+    }
+
+    input[id='tab-side-by-side']:checked ~ .glider {
+      transform: translateX(0);
+    }
+
+    input[id='tab-difference']:checked ~ .glider {
+      transform: translateX(100%);
+    }
+
+    input[id='tab-overlay']:checked ~ .glider {
+      transform: translateX(200%);
+    }
+
+    .glider {
+      position: absolute;
+      display: flex;
+      width: var(--tab-width);
+      height: var(--tab-height);
+      background-color: var(--secondary-color);
+      z-index: 1;
+      border-radius: 8px;
+      transition: 0.25s ease-out;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .tabs {
+        transform: scale(0.6);
+        transform-origin: bottom;
+      }
+    }
+  </style>
+</head>
+<body style="overflow: hidden">
+  <div class="diff-backdrop">
+    <div class="diff-container">
+      <div class="tabs">
+        <input type="radio" id="tab-side-by-side" name="tabs" checked />
+        <label class="tab" for="tab-side-by-side">Side by side</label>
+        <input type="radio" id="tab-difference" name="tabs" />
+        <label class="tab" for="tab-difference">Difference</label>
+        <input type="radio" id="tab-overlay" name="tabs" />
+        <label class="tab" for="tab-overlay">Overlay</label>
+        <span class="glider"></span>
+      </div>
+      <div class="diff-panel diff-side-by-side">
+        <div class="diff-item-container diff-item-before">
+          <div>BEFORE</div>
+          <img class="diff-item-image" src="./images/image-before.png" />
+        </div>
+        <div class="diff-item-container diff-item-after">
+          <div>AFTER</div>
+          <img class="diff-item-image" src="./images/image-after.png" />
+        </div>
+      </div>
+      <div class="diff-panel diff-difference hidden">
+        <div class="diff-item-container diff-item-before">
+          <canvas id="diff-difference-image" class="diff-item-image" />
+        </div>
+      </div>
+      <div class="diff-panel diff-overlay hidden">
+        <div class="diff-item-container diff-item-before">
+          <img class="diff-item-image" src="./images/image-before.png" />
+        </div>
+        <div class="diff-item-container diff-item-after">
+          <div>
+            <input
+              type="range"
+              id="overlay-opacity"
+              name="overlay-opacity"
+              min="0"
+              max="1"
+              value="0.5"
+              step="0.01"
+            />
+            <label for="overlay-opacity">Overlay opacity</label>
+          </div>
+          <img class="diff-item-image" src="./images/image-after.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const TABS_MAP = {
+      'tab-side-by-side': 'diff-side-by-side',
+      'tab-difference': 'diff-difference',
+      'tab-overlay': 'diff-overlay',
+    }
+
+    let lastSelectedTab = 'tab-side-by-side'
+
+    const onTabClick = (event) => {
+      const selectedTabId = event.currentTarget.id
+
+      document
+        .querySelector(`.${TABS_MAP[lastSelectedTab]}`)
+        .classList.toggle('hidden')
+      document
+        .querySelector(`.${TABS_MAP[selectedTabId]}`)
+        .classList.toggle('hidden')
+
+      lastSelectedTab = selectedTabId
+    }
+
+    const tabs = document.querySelectorAll('input[name="tabs"]')
+    tabs.forEach((tab) => tab.addEventListener('click', onTabClick))
+
+    const imageBefore = document.querySelector(
+      '.diff-side-by-side .diff-item-before img',
+    )
+    const imageAfter = document.querySelector(
+      '.diff-side-by-side .diff-item-after img',
+    )
+
+    let imageBeforeLoaded = false
+    let imageAfterLoaded = false
+
+    imageBefore.onload = () => {
+      imageBeforeLoaded = true
+
+      prepareDiffCanvas()
+    }
+
+    imageAfter.onload = () => {
+      imageAfterLoaded = true
+
+      prepareDiffCanvas()
+    }
+
+    function createCanvas(image) {
+      const canvas = document.createElement('canvas')
+      canvas.width = image.naturalWidth
+      canvas.height = image.naturalHeight
+
+      const context = canvas.getContext('2d')
+      context.drawImage(image, 0, 0)
+
+      return canvas
+    }
+
+    function prepareDiffCanvas() {
+      if (!imageBeforeLoaded || !imageAfterLoaded) {
+        return
+      }
+
+      const offscreenCanvasBefore = createCanvas(imageBefore)
+      const offscreenCanvasAfter = createCanvas(imageAfter)
+
+      const differenceCanvas = document.querySelector(
+        'canvas#diff-difference-image',
+      )
+
+      const imageDataBefore = offscreenCanvasBefore
+        .getContext('2d')
+        .getImageData(
+          0,
+          0,
+          offscreenCanvasBefore.width,
+          offscreenCanvasBefore.height,
+        )
+
+      const imageDataAfter = offscreenCanvasAfter
+        .getContext('2d')
+        .getImageData(
+          0,
+          0,
+          offscreenCanvasAfter.width,
+          offscreenCanvasAfter.height,
+        )
+
+      const imageBeforePixels = imageDataBefore.data.reduce(
+        (pixels, channel, index) => {
+          if (index % 4 === 0) {
+            pixels.push([channel])
+          } else {
+            pixels[pixels.length - 1].push(channel)
+          }
+
+          return pixels
+        },
+        [],
+      )
+
+      const imageAfterPixels = imageDataAfter.data.reduce(
+        (pixels, channel, index) => {
+          if (index % 4 === 0) {
+            pixels.push([channel])
+          } else {
+            pixels[pixels.length - 1].push(channel)
+          }
+
+          return pixels
+        },
+        [],
+      )
+
+      const imageDiffPixels = imageBeforePixels.map((pixel, index) => {
+        if (pixel.join(',') === imageAfterPixels[index].join(',')) {
+          return pixel
+        }
+
+        return [255, 0, 0, 255]
+      })
+
+      const imageDiffDataArray = imageDiffPixels.reduce((acc, pixel, index) => {
+        acc[index * 4] = pixel[0]
+        acc[index * 4 + 1] = pixel[1]
+        acc[index * 4 + 2] = pixel[2]
+        acc[index * 4 + 3] = pixel[3]
+        return acc
+      }, new Uint8ClampedArray(imageDiffPixels.length * 4))
+
+      const offscreenDiffCanvas = document.createElement('canvas')
+      offscreenDiffCanvas.width = offscreenCanvasBefore.width
+      offscreenDiffCanvas.height = offscreenCanvasBefore.height
+
+      const diffImageData = new ImageData(
+        imageDiffDataArray,
+        offscreenCanvasBefore.width,
+        offscreenCanvasBefore.height,
+      )
+      offscreenDiffCanvas.getContext('2d').putImageData(diffImageData, 0, 0)
+
+      const minWidth = Math.min(imageBefore.width, imageAfter.width)
+      const minHeight = Math.min(imageBefore.height, imageAfter.height)
+
+      differenceCanvas.width = offscreenDiffCanvas.width
+      differenceCanvas.height = offscreenDiffCanvas.height
+
+      differenceCanvas
+        .getContext('2d')
+        .drawImage(
+          offscreenDiffCanvas,
+          0,
+          0,
+          offscreenDiffCanvas.width,
+          offscreenDiffCanvas.height,
+        )
+    }
+
+    const overlayOpacityInput = document.querySelector(
+      'input[name="overlay-opacity"]',
+    )
+    overlayOpacityInput.addEventListener('input', (event) => {
+      const root = document.documentElement
+      root.style.setProperty(
+        '--diff-overlay-opacity',
+        event.currentTarget.value,
+      )
+    })
+  </script>
+</body>

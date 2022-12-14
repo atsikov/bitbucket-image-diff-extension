@@ -1,0 +1,67 @@
+.image-diff-tabs {
+  display: flex;
+  position: relative;
+  background-color: #f4f5f7;
+  box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15),
+    0 6px 12px 0 rgba(24, 94, 224, 0.15);
+  padding: 4px;
+  border-radius: 4px;
+  width: fit-content;
+
+  * {
+    z-index: 2;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--inactive-tab-color);
+    width: var(--tab-width);
+    height: var(--tab-height);
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+  }
+
+  input[type='radio'] {
+    display: none;
+  }
+
+  input[type='radio']:checked + label {
+    color: var(--active-tab-color);
+    font-weight: 500;
+  }
+
+  input[id='tab-side-by-side']:checked ~ .glider {
+    transform: translateX(0);
+  }
+
+  input[id='tab-difference']:checked ~ .glider {
+    transform: translateX(100%);
+  }
+
+  input[id='tab-overlay']:checked ~ .glider {
+    transform: translateX(200%);
+  }
+
+  .glider {
+    position: absolute;
+    display: flex;
+    width: var(--tab-width);
+    height: var(--tab-height);
+    background-color: var(--secondary-color);
+    z-index: 1;
+    border-radius: 8px;
+    transition: 0.25s ease-out;
+  }
+}
+
+@media (max-width: 700px) {
+  .tabs {
+    transform: scale(0.6);
+    transform-origin: bottom;
+  }
+}

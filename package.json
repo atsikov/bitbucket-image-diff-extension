@@ -1,0 +1,36 @@
+{
+  "name": "bitbucket-image-diff-extension",
+  "version": "0.0.1",
+  "description": "Chrome extension do compare changed images in Bitbucket pull requests",
+  "repository": "https://github.com/atsikov/bitbucket-image-diff-extension",
+  "author": "Aleksei Tsikov <alexey.tsikov@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webextension-polyfill-ts": "0.26.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "8.19.0",
+    "@types/chrome": "0.0.204",
+    "@types/jest": "29.2.4",
+    "@types/node": "18.11.13",
+    "copy-webpack-plugin": "11.0.0",
+    "css-loader": "6.7.2",
+    "css-minimizer-webpack-plugin": "4.2.2",
+    "fork-ts-checker-webpack-plugin": "7.2.13",
+    "identity-obj-proxy": "3.0.0",
+    "jest": "29.3.1",
+    "jest-environment-jsdom": "29.3.1",
+    "mini-css-extract-plugin": "2.7.2",
+    "postcss": "8.4.20",
+    "postcss-loader": "7.0.2",
+    "postcss-nested": "6.0.0",
+    "postcss-preset-env": "7.8.3",
+    "prettier": "2.8.1",
+    "style-loader": "3.3.1",
+    "ts-jest": "29.0.3",
+    "ts-loader": "9.4.2",
+    "typescript": "4.9.4",
+    "webpack": "5.75.0",
+    "webpack-cli": "5.0.1"
+  }
+}
