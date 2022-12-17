@@ -1,4 +1,4 @@
 import '../styles/global.pcss'
-import { createOverlayContainer } from './content'
+import { createOverlayContainer } from './overlay'
 
 createOverlayContainer(document.body)

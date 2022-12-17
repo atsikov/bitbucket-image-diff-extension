@@ -32,4 +32,10 @@ export enum ElementId {
   Tabs = 'image-diff-tabs',
   OverlayOpacityInput = 'overlay-opacity-input',
   DifferenceImageCanvas = 'diff-difference-image-canvas',
+  ImageBefore = 'image-before',
+  ImageAfter = 'image-after',
+  ImageDiffStats = 'image-diff-stats',
+  ImageDiffStatsBefore = 'image-diff-stats-before',
+  ImageDiffStatsAfter = 'image-diff-stats-after',
+  ImageDiffStatsRatio = 'image-diff-stats-ratio',
 }

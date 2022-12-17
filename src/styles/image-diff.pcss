@@ -12,6 +12,7 @@
 
 .diff-container {
   width: 100%;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +29,7 @@
 .diff-item-container {
   line-height: 1.5rem;
   padding: 16px;
-  flex: 1;
+  width: 100%;
   text-align: center;
 }
 
@@ -47,7 +48,7 @@
   border: 3px solid;
   border-radius: 3px;
   max-width: calc(50vw - 32px);
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 300px);
   background-size: 20px 20px;
   background-position: 0px 0px, 0px 10px, 10px -10px, -10px 0px;
   background-image: linear-gradient(
@@ -65,10 +66,21 @@
 }
 
 .diff-overlay {
-  position: relative;
+  flex-direction: column;
 
-  .diff-item-before .diff-item-image {
-    margin-top: calc(16px + 1.5rem);
+  .diff-overlay-alpha-input {
+    background: rgb(255, 235, 230);
+    width: 100%;
+    text-align: center;
+    margin-bottom: -16px;
+    padding-top: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .diff-images-stack {
+    display: flex;
+    width: 100%;
   }
 
   .diff-item-after {
@@ -76,6 +88,7 @@
     background-color: transparent;
     color: rgb(191, 38, 0);
     width: 100%;
+    padding: 16px 0;
 
     .diff-item-image {
       opacity: var(--diff-overlay-opacity);
@@ -85,4 +98,11 @@
 
 .hidden {
   display: none;
+}
+
+.diff-image-stats {
+  background-color: rgb(244, 245, 247);
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 8px;
 }

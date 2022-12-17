@@ -8,6 +8,9 @@ declare const styles = {
   'diff-item-image': string,
   'diff-difference': string,
   'diff-overlay': string,
+  'diff-image-stats': string,
+  'diff-overlay-alpha-input': string,
+  'diff-images-stack': string,
   hidden: string,
 }
 
