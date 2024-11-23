@@ -7,12 +7,19 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 module.exports = {
   entry: {
     content: './src/content/index.ts',
+    'content.preact': './src/content/index.preact.tsx',
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
         test: /\.(js|ts)x?$/,
-        use: ['ts-loader'],
+        use: [
+          {
+            loader: '@wyw-in-js/webpack-loader',
+          },
+          'ts-loader',
+        ],
         exclude: /node_modules/,
       },
       {
@@ -33,7 +40,12 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
+      'react/jsx-runtime': 'preact/jsx-runtime',
+    },
   },
   output: {
     filename: '[name].js',

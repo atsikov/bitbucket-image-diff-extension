@@ -5,4 +5,4 @@ declare const styles = {
   hidden: string,
 }
 
-export default styles
+export = styles

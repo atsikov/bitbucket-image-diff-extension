@@ -128,15 +128,19 @@ export async function createDiffCanvasAndStats(
   ).length
   const differentPixelsRatio = numDifferentPixels / imageBeforePixels.length
 
-  const imageDiffDataArray = imageDiffPixels.reduce((acc, pixel, index) => {
-    const diffPixel = pixel ?? [255, 0, 0, 255]
+  // Naive diff implementation, which simply replaces mismatching pixels with opaque red color
+  const imageDiffDataArray = imageDiffPixels.reduce(
+    (acc, pixel, index) => {
+      const diffPixel = pixel ?? [255, 0, 0, 255]
 
-    acc[index * 4] = diffPixel[0]
-    acc[index * 4 + 1] = diffPixel[1]
-    acc[index * 4 + 2] = diffPixel[2]
-    acc[index * 4 + 3] = diffPixel[3]
-    return acc
-  }, new Uint8ClampedArray(imageDiffPixels.length * 4))
+      acc[index * 4] = diffPixel[0]
+      acc[index * 4 + 1] = diffPixel[1]
+      acc[index * 4 + 2] = diffPixel[2]
+      acc[index * 4 + 3] = diffPixel[3]
+      return acc
+    },
+    new Uint8ClampedArray(imageDiffPixels.length * 4),
+  )
 
   const offscreenDiffCanvas = document.createElement('canvas')
   offscreenDiffCanvas.width = width

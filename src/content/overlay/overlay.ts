@@ -1,5 +1,5 @@
-import diffStyles from '../../styles/image-diff.pcss'
-import tabsStyles from '../../styles/tabs.pcss'
+import * as diffStyles from '../../styles/image-diff.pcss'
+import * as tabsStyles from '../../styles/tabs.pcss'
 
 import {
   DEFAULT_SELECTED_TAB,
@@ -78,13 +78,13 @@ export async function renderOverlay(
   <div class="${diffStyles['diff-backdrop']}">
     <div class="${diffStyles['diff-container']}">
       <div class="${tabsStyles['image-diff-tabs']} ${tabsStyles.hidden}" id="${
-    ElementId.Tabs
-  }">
+        ElementId.Tabs
+      }">
       </div>
 
       <div class="${getDiffPanelClassNames('diff-side-by-side')}" id="${
-    TAB_CONTAINER_IDS.sideBySide
-  }">
+        TAB_CONTAINER_IDS.sideBySide
+      }">
         <div class="${CLASSNAMES_IMAGE_CONTAINER_BEFORE}">
           <div>BEFORE</div>
           <img class="${
@@ -100,18 +100,18 @@ export async function renderOverlay(
       </div>
 
       <div class="${getDiffPanelClassNames('diff-difference')}" id="${
-    TAB_CONTAINER_IDS.difference
-  }">
+        TAB_CONTAINER_IDS.difference
+      }">
         <div class="${CLASSNAMES_IMAGE_CONTAINER_BEFORE}">
           <canvas id="${ElementId.DifferenceImageCanvas}" class="${
-    diffStyles['diff-item-image']
-  }" />
+            diffStyles['diff-item-image']
+          }" />
         </div>
       </div>
 
       <div class="${getDiffPanelClassNames('diff-overlay')}" id="${
-    TAB_CONTAINER_IDS.overlay
-  }">
+        TAB_CONTAINER_IDS.overlay
+      }">
         <div class="${diffStyles['diff-overlay-alpha-input']}">
           <input
             type="range"
@@ -138,8 +138,8 @@ export async function renderOverlay(
         </div>
       </div>
       <div id="${ElementId.ImageDiffStats}" class="${
-    diffStyles['diff-image-stats']
-  }">
+        diffStyles['diff-image-stats']
+      }">
         <div id="${ElementId.ImageDiffStatsBefore}">
         </div>
         <div id="${ElementId.ImageDiffStatsAfter}">
@@ -167,11 +167,13 @@ export async function renderOverlay(
   queryById<HTMLImageElement>(
     container,
     ElementId.ImageDiffStatsBefore,
-  )!.innerHTML = `Before: ${diffStats.sizeBefore.width} x ${diffStats.sizeBefore.height}`
+  )!.innerHTML =
+    `Before: ${diffStats.sizeBefore.width} x ${diffStats.sizeBefore.height}`
   queryById<HTMLImageElement>(
     container,
     ElementId.ImageDiffStatsAfter,
-  )!.innerHTML = `After: ${diffStats.sizeAfter.width} x ${diffStats.sizeAfter.height}`
+  )!.innerHTML =
+    `After: ${diffStats.sizeAfter.width} x ${diffStats.sizeAfter.height}`
 
   if (!diffStats.canvas) {
     queryById<HTMLImageElement>(

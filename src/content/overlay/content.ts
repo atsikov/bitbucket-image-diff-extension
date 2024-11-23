@@ -97,6 +97,8 @@ export function createOverlayContainer(parent: HTMLElement) {
     attributes: false,
     characterData: false,
   })
+
+  onElementAdded()
 }
 
 createOverlayContainer(document.body)
