@@ -39,3 +39,9 @@ export enum ElementId {
   ImageDiffStatsAfter = 'image-diff-stats-after',
   ImageDiffStatsRatio = 'image-diff-stats-ratio',
 }
+
+export const ACTIVE_TAB_COLOR = '#0052cc'
+export const INACTIVE_TAB_COLOR = '#42526e'
+export const SECONDARY_COLOR = 'rgb(235, 236, 240)'
+export const TAB_WIDTH = '150px'
+export const TAB_HEIGHT = '44px'

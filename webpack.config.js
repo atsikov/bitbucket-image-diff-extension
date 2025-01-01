@@ -6,8 +6,14 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
   entry: {
-    content: './src/content/index.ts',
-    'content.preact': './src/content/index.preact.tsx',
+    content: {
+      import: './src/content/index.ts',
+      layer: 'html',
+    },
+    'content.preact': {
+      import: './src/content/index.preact.tsx',
+      layer: 'preact',
+    },
   },
   devtool: 'inline-source-map',
   module: {
@@ -17,6 +23,11 @@ module.exports = {
         use: [
           {
             loader: '@wyw-in-js/webpack-loader',
+            options: {
+              babelOptions: {
+                presets: ['@babel/preset-typescript'],
+              },
+            },
           },
           'ts-loader',
         ],
@@ -24,17 +35,29 @@ module.exports = {
       },
       {
         test: /\.(pcss|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
+        loader: MiniCssExtractPlugin.loader,
+      },
+      {
+        test: /\.(pcss|css)$/,
+        oneOf: [
           {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: 'diff-image-ext__[local]-[hash:base64:5]',
+            issuerLayer: 'html',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: {
+                    localIdentName: 'diff-image-ext__[local]-[hash:base64:5]',
+                  },
+                },
               },
-            },
+              'postcss-loader',
+            ],
           },
-          'postcss-loader',
+          {
+            issuerLayer: 'preact',
+            use: [{ loader: 'css-loader' }],
+          },
         ],
       },
     ],
@@ -63,4 +86,7 @@ module.exports = {
       patterns: [{ from: 'static' }],
     }),
   ],
+  experiments: {
+    layers: true,
+  },
 }

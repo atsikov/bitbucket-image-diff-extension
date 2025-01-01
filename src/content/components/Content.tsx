@@ -86,6 +86,8 @@ export const Content = () => {
     body.style.overflowY = bodyOverflowStyles.current?.overflow ?? ''
 
     bodyOverflowStyles.current = undefined
+
+    setOverlayImages(null)
   }, [])
 
   useLayoutEffect(() => {
