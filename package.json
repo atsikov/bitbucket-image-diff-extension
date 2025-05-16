@@ -10,7 +10,7 @@
     "start": "yarn build:dev --watch",
     "dist:clear": "rimraf ./dist",
     "build:dev": "npm run dist:clear && webpack --config webpack.config.js --mode development",
-    "build:prod": "npm run dist:clear && webpack --config webpack.config.js --mode production"
+    "build:prod": "npm run dist:clear && webpack --config webpack.config.js --mode production --devtool source-map"
   },
   "dependencies": {
     "@linaria/core": "6.2.0",

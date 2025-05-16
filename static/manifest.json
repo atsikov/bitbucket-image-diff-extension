@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Bitbucket Image Diff",
-  "description": "Browser extension to add missing image diff feature to Bitbucket pull requests",
+  "description": "Extension brings a missing images comparison feature to Bitbucket pull requests, allowing to easily compare changed images and quickly see the difference",
   "version": "0.1",
   "content_scripts": [
     {
