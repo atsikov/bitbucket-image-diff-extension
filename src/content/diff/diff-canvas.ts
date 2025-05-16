@@ -46,23 +46,26 @@ function getImageDataPixels(imageData: ImageData) {
   }, [])
 }
 
-export async function createDiffCanvasAndStats(
-  imageBefore: HTMLImageElement,
-  imageAfter: HTMLImageElement,
-): Promise<
+export type ImageDiffData =
   | {
       canvas: null
+      diffImage: null
       sizeBefore: { width: number; height: number }
       sizeAfter: { width: number; height: number }
     }
   | {
       canvas: HTMLCanvasElement
+      diffImage: ImageData
       numDifferentPixels: number
       differentPixelsRatio: number
       sizeBefore: { width: number; height: number }
       sizeAfter: { width: number; height: number }
     }
-> {
+
+export async function createDiffCanvasAndStats(
+  imageBefore: HTMLImageElement,
+  imageAfter: HTMLImageElement,
+): Promise<ImageDiffData> {
   await waitForImagesToLoad(imageBefore, imageAfter)
 
   const sizeBefore = {
@@ -81,6 +84,7 @@ export async function createDiffCanvasAndStats(
   ) {
     return {
       canvas: null,
+      diffImage: null,
       sizeBefore,
       sizeAfter,
     }
@@ -154,6 +158,7 @@ export async function createDiffCanvasAndStats(
 
   return {
     canvas: offscreenDiffCanvas,
+    diffImage: diffImageData,
     numDifferentPixels,
     differentPixelsRatio,
     sizeBefore,

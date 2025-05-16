@@ -1,9 +1,37 @@
+import { useEffect, useRef } from 'preact/hooks'
+import { ImageDiffData } from '../../diff/diff-canvas'
+import { assertCanvasContext } from '../..//utils'
+import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
+
 type DiffImageTabDifferenceProps = {
-  images: [string, string]
+  imageDiffData: Extract<ImageDiffData, { canvas: HTMLCanvasElement }>
 }
 
 export const DiffImageTabDifference = ({
-  images,
+  imageDiffData,
 }: DiffImageTabDifferenceProps) => {
-  return <div>{images.join(',')}</div>
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) {
+      return
+    }
+
+    canvas.width = imageDiffData.diffImage.width
+    canvas.height = imageDiffData.diffImage.height
+
+    const canvasContext = canvas.getContext('2d') ?? null
+    assertCanvasContext(canvasContext)
+
+    canvasContext.putImageData(imageDiffData.diffImage, 0, 0)
+  }, [imageDiffData])
+
+  return (
+    <DiffImageTab data-diff-type="difference">
+      <DiffImageWrapper data-img-type="before">
+        <canvas ref={canvasRef} />
+      </DiffImageWrapper>
+    </DiffImageTab>
+  )
 }

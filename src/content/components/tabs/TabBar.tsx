@@ -15,6 +15,8 @@ type TabBarProps<T extends string> = {
     id: T
   }[]
   defaultTab?: T
+  disabledTabs?: T[]
+  disabled?: boolean
   onChange?: (value: T) => void
 }
 
@@ -41,6 +43,11 @@ const TabBarContainer = styled.div`
 
   input[type='radio']:focus + label {
     outline: 2px solid ${ACTIVE_TAB_COLOR};
+  }
+
+  input[type='radio']:disabled + label {
+    opacity: 0.5;
+    pointer-events: none;
   }
 `
 
@@ -74,6 +81,8 @@ const TabBarSlider = styled.span`
 export const TabBar = <T extends string>({
   options,
   defaultTab,
+  disabled,
+  disabledTabs,
   onChange,
 }: TabBarProps<T>) => {
   const [selectedTab, setSelectedTab] = useState(defaultTab)
@@ -88,6 +97,7 @@ export const TabBar = <T extends string>({
             id={option.id}
             name={TABS_RADIO_GROUP_NAME}
             checked={selectedTab === option.id}
+            disabled={disabled || disabledTabs?.includes(option.id)}
             onChange={() => {
               setSelectedTab(option.id)
               onChange?.(option.id)
