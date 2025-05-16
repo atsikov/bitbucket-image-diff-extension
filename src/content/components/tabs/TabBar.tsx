@@ -1,7 +1,8 @@
 import { styled } from '@linaria/react'
-import { useState } from 'preact/hooks'
+import { useLayoutEffect, useRef, useState } from 'preact/hooks'
 import {
   ACTIVE_TAB_COLOR,
+  DEFAULT_SELECTED_TAB,
   INACTIVE_TAB_COLOR,
   SECONDARY_COLOR,
   TAB_HEIGHT,
@@ -16,7 +17,6 @@ type TabBarProps<T extends string> = {
   }[]
   defaultTab?: T
   disabledTabs?: T[]
-  disabled?: boolean
   onChange?: (value: T) => void
 }
 
@@ -28,7 +28,7 @@ const TabBarContainer = styled.div`
     0 0 1px 0 rgba(24, 94, 224, 0.15),
     0 6px 12px 0 rgba(24, 94, 224, 0.15);
   padding: 4px;
-  border-radius: 4px;
+  border-radius: 8px;
   width: fit-content;
 
   input[type='radio'] {
@@ -60,7 +60,7 @@ const TabBarLabel = styled.label`
   height: ${TAB_HEIGHT};
   font-size: 1rem;
   font-weight: 400;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: color 0.15s ease-in;
   z-index: 2;
@@ -81,12 +81,18 @@ const TabBarSlider = styled.span`
 export const TabBar = <T extends string>({
   options,
   defaultTab,
-  disabled,
   disabledTabs,
   onChange,
 }: TabBarProps<T>) => {
+  const defaultFocusedInputRef = useRef<HTMLInputElement | null>(null)
   const [selectedTab, setSelectedTab] = useState(defaultTab)
   const selectedTabIndex = options.findIndex(({ id }) => id === selectedTab)
+
+  useLayoutEffect(() => {
+    if (defaultFocusedInputRef.current) {
+      defaultFocusedInputRef.current.focus()
+    }
+  }, [])
 
   return (
     <TabBarContainer role="tablist">
@@ -97,11 +103,17 @@ export const TabBar = <T extends string>({
             id={option.id}
             name={TABS_RADIO_GROUP_NAME}
             checked={selectedTab === option.id}
-            disabled={disabled || disabledTabs?.includes(option.id)}
+            disabled={disabledTabs?.includes(option.id)}
+            autofocus={option.id === DEFAULT_SELECTED_TAB}
             onChange={() => {
               setSelectedTab(option.id)
               onChange?.(option.id)
             }}
+            {...(option.id === DEFAULT_SELECTED_TAB
+              ? {
+                  ref: defaultFocusedInputRef,
+                }
+              : undefined)}
           />
 
           <TabBarLabel for={option.id} role="tab">

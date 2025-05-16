@@ -7,12 +7,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 module.exports = {
   entry: {
     content: {
-      import: './src/content/index.ts',
-      layer: 'html',
-    },
-    'content.preact': {
       import: './src/content/index.preact.tsx',
-      layer: 'preact',
     },
   },
   devtool: 'inline-source-map',
@@ -39,26 +34,7 @@ module.exports = {
       },
       {
         test: /\.(pcss|css)$/,
-        oneOf: [
-          {
-            issuerLayer: 'html',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: {
-                    localIdentName: 'diff-image-ext__[local]-[hash:base64:5]',
-                  },
-                },
-              },
-              'postcss-loader',
-            ],
-          },
-          {
-            issuerLayer: 'preact',
-            use: [{ loader: 'css-loader' }],
-          },
-        ],
+        use: [{ loader: 'css-loader' }],
       },
     ],
   },
@@ -86,7 +62,4 @@ module.exports = {
       patterns: [{ from: 'static' }],
     }),
   ],
-  experiments: {
-    layers: true,
-  },
 }

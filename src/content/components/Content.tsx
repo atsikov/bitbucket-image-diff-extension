@@ -14,6 +14,35 @@ const ExtensionContainer = styled.div`
   position: relative;
   z-index: 9999;
 `
+const CloseButton = styled.button`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--inactive-tab-color);
+  background-color: #f4f5f7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow:
+    0 0 1px 0 rgba(24, 94, 224, 0.15),
+    0 6px 12px 0 rgba(24, 94, 224, 0.15);
+
+  &:hover {
+    color: var(--active-tab-color);
+    background-color: var(--secondary-color);
+  }
+
+  &:focus {
+    outline: 2px solid var(--active-tab-color);
+  }
+`
 
 const getImagesContainer = (
   extensionContainerRef: MutableRef<HTMLElement | null>,
@@ -35,6 +64,11 @@ export const Content = () => {
   >()
 
   const openDiffOverlay = useCallback((event: MouseEvent) => {
+    if (bodyOverflowStyles.current) {
+      // Overlay is already opened
+      return
+    }
+
     const imagesContainer = getImagesContainer(containerRef)
     if (!imagesContainer) {
       return
@@ -155,7 +189,16 @@ export const Content = () => {
       data-testid="image-diff-extension-container"
     >
       {overlayImages ? (
-        <Overlay images={overlayImages} open />
+        <>
+          <Overlay images={overlayImages} open />
+          <CloseButton
+            onClick={closeDiffOverlay}
+            aria-label="Close overlay"
+            title="Close overlay"
+          >
+            ✕
+          </CloseButton>
+        </>
       ) : (
         <Overlay open={false} />
       )}

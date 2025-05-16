@@ -6,6 +6,7 @@ import { DiffImageTabDifference } from './DiffImageTabDifference'
 import { DiffImageTabOverlay } from './DiffImageTabOverlay'
 import { TabBar } from './TabBar'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
+import { DiffImageStats } from './DiffImageStats'
 
 const TabContainer = styled.div`
   width: 100%;
@@ -18,7 +19,7 @@ type ImageDiffTabsProps = {
 
 const TAB_BAR_OPTIONS = TAB_LABELS.map(([id, label]) => ({ id, label }))
 
-export const ImageDiffTabs = ({ images }: ImageDiffTabsProps) => {
+export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
   const [selectedTab, setSelectedTab] = useState(DEFAULT_SELECTED_TAB)
 
   const imageBeforeRef = useRef<HTMLImageElement | null>(null)
@@ -51,7 +52,6 @@ export const ImageDiffTabs = ({ images }: ImageDiffTabsProps) => {
       <TabBar
         options={TAB_BAR_OPTIONS}
         defaultTab={DEFAULT_SELECTED_TAB}
-        disabled={!imageDiffData}
         disabledTabs={
           imageDiffData?.diffImage ? [] : ['tab-difference', 'tab-overlay']
         }
@@ -82,6 +82,8 @@ export const ImageDiffTabs = ({ images }: ImageDiffTabsProps) => {
       <TabContainer visible={selectedTab === 'tab-overlay'}>
         <DiffImageTabOverlay images={images} />
       </TabContainer>
+
+      {imageDiffData && <DiffImageStats imageDiffData={imageDiffData} />}
     </>
   )
 }

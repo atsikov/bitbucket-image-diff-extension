@@ -7,13 +7,13 @@ export const DiffImageWrapper = styled.div`
   text-align: center;
 
   &[data-img-type='before'] {
-    background: rgb(255, 235, 230);
-    color: rgb(191, 38, 0);
+    background: #ffeceb;
+    color: #ae2e24;
   }
 
   &[data-img-type='after'] {
-    background: rgb(227, 252, 239);
-    color: rgb(0, 102, 68);
+    background: #dcfff1;
+    color: #216e4e;
   }
 
   & img,
