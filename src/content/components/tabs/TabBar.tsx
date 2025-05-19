@@ -66,7 +66,7 @@ const TabBarLabel = styled.label`
   z-index: 2;
 `
 
-const TabBarSlider = styled.span`
+const TabBarSlider = styled('span')<{ 'data-selectedIndex': number }>`
   position: absolute;
   display: flex;
   width: ${TAB_WIDTH};

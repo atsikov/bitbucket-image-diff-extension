@@ -193,8 +193,8 @@ export const Content = () => {
           <Overlay images={overlayImages} open />
           <CloseButton
             onClick={closeDiffOverlay}
-            aria-label="Close overlay"
-            title="Close overlay"
+            aria-label="Close image diff"
+            title="Close image diff"
           >
             ✕
           </CloseButton>

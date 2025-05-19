@@ -16,7 +16,7 @@ const OverlayAlphaSliderContainer = styled.div`
   z-index: 1;
 `
 
-const ImagesStack = styled.div`
+const ImagesStack = styled('div')<{ overlayOpacity: number }>`
   display: flex;
   width: 100%;
 

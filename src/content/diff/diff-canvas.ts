@@ -48,13 +48,11 @@ function getImageDataPixels(imageData: ImageData) {
 
 export type ImageDiffData =
   | {
-      canvas: null
       diffImage: null
       sizeBefore: { width: number; height: number }
       sizeAfter: { width: number; height: number }
     }
   | {
-      canvas: HTMLCanvasElement
       diffImage: ImageData
       numDifferentPixels: number
       differentPixelsRatio: number
@@ -83,7 +81,6 @@ export async function createDiffCanvasAndStats(
     sizeBefore.height !== sizeAfter.height
   ) {
     return {
-      canvas: null,
       diffImage: null,
       sizeBefore,
       sizeAfter,
@@ -146,18 +143,9 @@ export async function createDiffCanvasAndStats(
     new Uint8ClampedArray(imageDiffPixels.length * 4),
   )
 
-  const offscreenDiffCanvas = document.createElement('canvas')
-  offscreenDiffCanvas.width = width
-  offscreenDiffCanvas.height = height
-
-  const offscreenDiffCanvasContext = offscreenDiffCanvas.getContext('2d')
-  assertCanvasContext(offscreenDiffCanvasContext)
-
   const diffImageData = new ImageData(imageDiffDataArray, width, height)
-  offscreenDiffCanvasContext.putImageData(diffImageData, 0, 0)
 
   return {
-    canvas: offscreenDiffCanvas,
     diffImage: diffImageData,
     numDifferentPixels,
     differentPixelsRatio,

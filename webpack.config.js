@@ -7,7 +7,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 module.exports = {
   entry: {
     content: {
-      import: './src/content/index.preact.tsx',
+      import: './src/content/index.tsx',
     },
   },
   devtool: 'inline-source-map',

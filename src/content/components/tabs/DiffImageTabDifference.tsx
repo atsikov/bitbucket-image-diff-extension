@@ -4,7 +4,7 @@ import { assertCanvasContext } from '../..//utils'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
 
 type DiffImageTabDifferenceProps = {
-  imageDiffData: Extract<ImageDiffData, { canvas: HTMLCanvasElement }>
+  imageDiffData: Extract<ImageDiffData, { diffImage: ImageData }>
 }
 
 export const DiffImageTabDifference = ({

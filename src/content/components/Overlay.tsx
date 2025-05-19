@@ -2,7 +2,10 @@ import { styled } from '@linaria/react'
 import { useRef, useState } from 'preact/hooks'
 import { DiffImageTabs } from './tabs/DiffImageTabs'
 
-const OverlayBackdrop = styled.div`
+const OverlayBackdrop = styled('div')<{
+  'data-open': boolean
+  'data-hasContent': boolean
+}>`
   position: fixed;
   top: 0;
   left: 0;

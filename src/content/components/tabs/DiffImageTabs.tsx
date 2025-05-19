@@ -8,7 +8,7 @@ import { TabBar } from './TabBar'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
 import { DiffImageStats } from './DiffImageStats'
 
-const TabContainer = styled.div`
+const TabContainer = styled('div')<{ visible: boolean }>`
   width: 100%;
   display: ${({ visible }) => (visible ? 'auto' : 'none')};
 `
@@ -74,7 +74,7 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
       </TabContainer>
 
       <TabContainer visible={selectedTab === 'tab-difference'}>
-        {imageDiffData?.canvas ? (
+        {imageDiffData?.diffImage ? (
           <DiffImageTabDifference imageDiffData={imageDiffData} />
         ) : null}
       </TabContainer>
