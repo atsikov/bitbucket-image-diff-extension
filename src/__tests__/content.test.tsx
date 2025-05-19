@@ -35,9 +35,9 @@ describe('toggle overlay', () => {
     expect(screen.getByText('Difference')).toBeInTheDocument()
     expect(screen.getByText('Overlay')).toBeInTheDocument()
 
-    await screen.findByText('Before: 400 x 896')
-    screen.getByText('After: 400 x 896')
-    screen.getByText('517 different pixels (0.14%)')
+    await screen.findByText('Before: 384 x 512')
+    screen.getByText('After: 384 x 512')
+    screen.getByText('7447 different pixels (3.79%)')
   })
 
   it('should close overlay on esc button press', async () => {

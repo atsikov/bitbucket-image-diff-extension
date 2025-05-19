@@ -2,7 +2,7 @@
 module.exports = {
   preset: 'ts-jest',
   transform: {
-    '^.+.[jt]sx?$': ['ts-jest', { isolatedModules: true }],
+    '^.+.[jt]sx?$': ['ts-jest', {}],
   },
   testEnvironment: 'jsdom',
   testEnvironmentOptions: { resources: 'usable', customExportConditions: [''] },
