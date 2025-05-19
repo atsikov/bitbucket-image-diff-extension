@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/dom'
+import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { readFileSync } from 'fs'
@@ -28,7 +28,6 @@ describe('toggle overlay', () => {
     expect(screen.queryByText('Side by side')).not.toBeInTheDocument()
 
     const image = document.querySelector('img')!
-    screen.debug(image)
 
     await userEvent.click(image)
 
