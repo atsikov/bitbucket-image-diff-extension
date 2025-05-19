@@ -2,12 +2,18 @@
   "manifest_version": 3,
   "name": "Bitbucket Image Diff",
   "description": "Browser extension to add missing image diff feature to Bitbucket pull requests",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "content_scripts": [
     {
-      "matches": ["https://*.bitbucket.org/*"],
-      "js": ["content.js"],
-      "css": ["styles/content.css"]
+      "matches": [
+        "https://*.bitbucket.org/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles/content.css"
+      ]
     }
   ]
 }
