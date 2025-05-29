@@ -1,6 +1,7 @@
 import { styled } from '@linaria/react'
 import { useState } from 'preact/hooks'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
+import { ImageCaption } from './ImageCaption'
 
 type DiffImageTabSliderProps = {
   images: [string, string]
@@ -38,10 +39,11 @@ const AfterImageWrapper = styled('div')<{ clipX: number }>`
 
 const SliderLine = styled('div')<{ x: number }>`
   position: absolute;
-  left: ${({ x }) => x}%;
+  left: ${({ x }) => `${x}%`};
   top: 0;
   height: 100%;
   width: 2px;
+  opacity: 0.5;
   background-color: #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
   pointer-events: none;
@@ -64,14 +66,14 @@ export const DiffImageTabSlider = ({ images }: DiffImageTabSliderProps) => {
         <ImageStack onMouseMove={handleMouseMove}>
           <BeforeImageWrapper>
             <DiffImageWrapper data-img-type="before">
-              <div>BEFORE</div>
+              <ImageCaption>Before</ImageCaption>
               <img src={images[0]} />
             </DiffImageWrapper>
           </BeforeImageWrapper>
 
           <AfterImageWrapper clipX={sliderPosition}>
             <DiffImageWrapper data-img-type="after">
-              <div>AFTER</div>
+              <ImageCaption>After</ImageCaption>
               <img src={images[1]} />
             </DiffImageWrapper>
           </AfterImageWrapper>

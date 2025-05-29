@@ -8,6 +8,7 @@ import { DiffImageTabSlider } from './DiffImageTabSlider'
 import { TabBar } from './TabBar'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
 import { DiffImageStats } from './DiffImageStats'
+import { ImageCaption } from './ImageCaption'
 
 const TabContainer = styled('div')<{ visible: boolean }>`
   width: 100%;
@@ -54,7 +55,9 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
         options={TAB_BAR_OPTIONS}
         defaultTab={DEFAULT_SELECTED_TAB}
         disabledTabs={
-          imageDiffData?.diffImage ? [] : ['tab-difference', 'tab-overlay', 'tab-slider']
+          imageDiffData?.diffImage
+            ? []
+            : ['tab-difference', 'tab-overlay', 'tab-slider']
         }
         onChange={(tabId) => {
           setSelectedTab(tabId)
@@ -64,11 +67,11 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
       <TabContainer visible={selectedTab === 'tab-side-by-side'}>
         <DiffImageTab data-diff-type="side-by-side">
           <DiffImageWrapper data-img-type="before">
-            <div>BEFORE</div>
+            <ImageCaption>Before</ImageCaption>
             <img src={images[0]} ref={imageBeforeRef} />
           </DiffImageWrapper>
           <DiffImageWrapper data-img-type="after">
-            <div>AFTER</div>
+            <ImageCaption>After</ImageCaption>
             <img src={images[1]} ref={imageAfterRef} />
           </DiffImageWrapper>
         </DiffImageTab>

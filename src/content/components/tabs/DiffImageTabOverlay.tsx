@@ -1,36 +1,45 @@
 import { styled } from '@linaria/react'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
 import { useState } from 'preact/hooks'
+import { ImageCaption } from './ImageCaption'
 
 type DiffImageTabOverlayProps = {
   images: [string, string]
 }
 
-const OverlayAlphaSliderContainer = styled.div`
-  background: rgb(255, 235, 230);
-  width: 100%;
-  margin-bottom: -16px;
-  padding-top: 18px;
-  text-align: center;
+const ImageStack = styled.div`
   position: relative;
-  z-index: 1;
+  display: inline-block;
+  cursor: col-resize;
+  width: 100%;
 `
 
-const ImagesStack = styled('div')<{ overlayOpacity: number }>`
-  display: flex;
+const BeforeImageWrapper = styled.div`
+  position: relative;
+`
+
+const AfterImageWrapper = styled('div')<{ overlayOpacity: number }>`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: ${({ overlayOpacity }) => overlayOpacity};
+`
 
-  & [data-img-type='after'] {
-    position: absolute;
-    background-color: transparent;
-    color: rgb(191, 38, 0);
-    width: 100%;
-    padding: 16px 0;
+const OverlayAlphaSliderContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 8px;
+  z-index: 1;
 
-    img {
-      opacity: ${({ overlayOpacity }) => overlayOpacity};
-    }
-  }
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5rem;
 `
 
 export const DiffImageTabOverlay = ({ images }: DiffImageTabOverlayProps) => {
@@ -39,6 +48,7 @@ export const DiffImageTabOverlay = ({ images }: DiffImageTabOverlayProps) => {
   return (
     <DiffImageTab data-diff-type="overlay">
       <OverlayAlphaSliderContainer>
+        <label for="overlay-diff-alpha-slider">Overlay opacity</label>
         <input
           type="range"
           id="overlay-diff-alpha-slider"
@@ -51,16 +61,23 @@ export const DiffImageTabOverlay = ({ images }: DiffImageTabOverlayProps) => {
             setOverlayOpacity(parseFloat(event.currentTarget.value))
           }
         />
-        <label for="overlay-diff-alpha-slider">Overlay opacity</label>
       </OverlayAlphaSliderContainer>
-      <ImagesStack overlayOpacity={overlayOpacity}>
-        <DiffImageWrapper data-img-type="before">
-          <img src={images[0]} />
-        </DiffImageWrapper>
-        <DiffImageWrapper data-img-type="after">
-          <img src={images[1]} />
-        </DiffImageWrapper>
-      </ImagesStack>
+
+      <ImageStack>
+        <BeforeImageWrapper>
+          <DiffImageWrapper data-img-type="before">
+            <ImageCaption />
+            <img src={images[0]} />
+          </DiffImageWrapper>
+        </BeforeImageWrapper>
+
+        <AfterImageWrapper overlayOpacity={overlayOpacity}>
+          <DiffImageWrapper data-img-type="after">
+            <ImageCaption />
+            <img src={images[1]} />
+          </DiffImageWrapper>
+        </AfterImageWrapper>
+      </ImageStack>
     </DiffImageTab>
   )
 }

@@ -18,7 +18,6 @@ export const DiffImageWrapper = styled.div`
 
   & img,
   & canvas {
-    margin: 16px 0px;
     border: 3px solid;
     border-radius: 3px;
     max-width: calc(50vw - 32px);
@@ -46,6 +45,8 @@ export const DiffImageTab = styled.div`
   display: flex;
   height: max-content;
   justify-content: center;
+
+  position: relative;
 
   &[data-diff-type='difference'] {
     & ${DiffImageWrapper} {
