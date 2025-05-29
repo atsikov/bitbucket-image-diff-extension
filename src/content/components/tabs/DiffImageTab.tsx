@@ -87,3 +87,17 @@ export const ImageStackAfterImageWrapper = styled('div')<{
     width: initial;
   }
 `
+
+export const OverlayAlphaSliderContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 8px;
+  z-index: 1;
+
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5rem;
+`

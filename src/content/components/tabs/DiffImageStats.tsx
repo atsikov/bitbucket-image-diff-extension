@@ -24,7 +24,7 @@ export const DiffImageStats = ({ imageDiffData }: DiffImageStatsProps) => {
         {imageDiffData.sizeAfter.height}
       </div>
       <div>
-        {imageDiffData.diffImage
+        {imageDiffData.getDiffImageData
           ? `${imageDiffData.numDifferentPixels} different pixels (${(
               imageDiffData.differentPixelsRatio * 100
             ).toFixed(2)}%)`

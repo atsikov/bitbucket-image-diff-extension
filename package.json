@@ -11,6 +11,7 @@
     "dist:clear": "rimraf ./dist",
     "build:dev": "npm run dist:clear && webpack --config webpack.config.js --mode development",
     "build:prod": "npm run dist:clear && webpack --config webpack.config.js --mode production --devtool source-map",
+    "tsc": "tsc --noEmit",
     "update-version": "node scripts/update-manifest-version.js",
     "release": "yarn version",
     "version": "yarn update-version && git add package.json static/manifest.json",

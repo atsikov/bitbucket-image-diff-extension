@@ -1,7 +1,7 @@
 import { styled } from '@linaria/react'
 import { useEffect, useRef, useState } from 'react'
 import { DEFAULT_SELECTED_TAB, TAB_LABELS } from '../../constants'
-import { createDiffCanvasAndStats, ImageDiffData } from '../../diff/diff-canvas'
+import { calculateImageDiff, ImageDiffData } from '../../diff/diff-canvas'
 import { DiffImageTabDifference } from './DiffImageTabDifference'
 import { DiffImageTabOverlay } from './DiffImageTabOverlay'
 import { DiffImageTabSlider } from './DiffImageTabSlider'
@@ -38,10 +38,7 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
 
       setImageDiffData(undefined)
       setImageDiffData(
-        await createDiffCanvasAndStats(
-          imageBeforeRef.current,
-          imageAfterRef.current,
-        ),
+        await calculateImageDiff(imageBeforeRef.current, imageAfterRef.current),
       )
     }
 
@@ -54,7 +51,7 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
         options={TAB_BAR_OPTIONS}
         defaultTab={DEFAULT_SELECTED_TAB}
         disabledTabs={
-          imageDiffData?.diffImage
+          imageDiffData?.getDiffImageData
             ? []
             : ['tab-difference', 'tab-overlay', 'tab-slider']
         }
@@ -77,7 +74,7 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
       </TabContainer>
 
       <TabContainer visible={selectedTab === 'tab-difference'}>
-        {imageDiffData?.diffImage ? (
+        {imageDiffData?.getDiffImageData ? (
           <DiffImageTabDifference imageDiffData={imageDiffData} />
         ) : null}
       </TabContainer>

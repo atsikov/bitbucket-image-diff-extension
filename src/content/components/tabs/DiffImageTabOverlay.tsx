@@ -1,4 +1,3 @@
-import { styled } from '@linaria/react'
 import {
   DiffImageTab,
   DiffImageWrapper,
@@ -6,26 +5,13 @@ import {
   ImageStack,
   ImageStackAfterImageWrapper,
   ImageStackBeforeImageWrapper,
+  OverlayAlphaSliderContainer,
 } from './DiffImageTab'
 import { useState } from 'preact/hooks'
 
 type DiffImageTabOverlayProps = {
   images: [string, string]
 }
-
-const OverlayAlphaSliderContainer = styled.div`
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  top: 8px;
-  z-index: 1;
-
-  height: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 0.5rem;
-`
 
 export const DiffImageTabOverlay = ({ images }: DiffImageTabOverlayProps) => {
   const [overlayOpacity, setOverlayOpacity] = useState(0.5)

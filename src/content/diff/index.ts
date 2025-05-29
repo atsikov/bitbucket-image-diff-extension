@@ -1,1 +1,1 @@
-export { createDiffCanvasAndStats } from './diff-canvas'
+export { calculateImageDiff as createDiffCanvasAndStats } from './diff-canvas'
