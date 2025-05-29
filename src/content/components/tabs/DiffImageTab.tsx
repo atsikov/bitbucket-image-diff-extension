@@ -47,14 +47,43 @@ export const DiffImageTab = styled.div`
   justify-content: center;
 
   position: relative;
+`
 
-  &[data-diff-type='difference'] {
-    & ${DiffImageWrapper} {
-      padding-top: calc(16px + 1.5rem);
-    }
+export const ImageCaption = styled.div`
+  height: 2rem;
+  line-height: 1.5rem;
+`
+
+export const ImageStack = styled.div`
+  position: relative;
+  display: inline-block;
+  cursor: col-resize;
+  width: 100%;
+`
+
+export const ImageStackBeforeImageWrapper = styled.div`
+  position: relative;
+
+  & > div[data-img-type] {
+    width: initial;
   }
+`
 
-  &[data-diff-type='overlay'] {
-    flex-direction: column;
+export const ImageStackAfterImageWrapper = styled('div')<{
+  overlayOpacity?: number
+  clipX?: number
+}>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: ${({ overlayOpacity }) => overlayOpacity ?? 'unset'};
+  clip-path: ${({ clipX }) =>
+    clipX ? `inset(0 ${100 - clipX}% 0 0)` : 'unset'};
+
+  & > div[data-img-type] {
+    width: initial;
   }
 `

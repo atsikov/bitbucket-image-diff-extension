@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks'
 import { ImageDiffData } from '../../diff/diff-canvas'
 import { assertCanvasContext } from '../..//utils'
-import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
+import { DiffImageTab, DiffImageWrapper, ImageCaption } from './DiffImageTab'
 
 type DiffImageTabDifferenceProps = {
   imageDiffData: Extract<ImageDiffData, { diffImage: ImageData }>
@@ -30,6 +30,7 @@ export const DiffImageTabDifference = ({
   return (
     <DiffImageTab data-diff-type="difference">
       <DiffImageWrapper data-img-type="before">
+        <ImageCaption />
         <canvas ref={canvasRef} />
       </DiffImageWrapper>
     </DiffImageTab>

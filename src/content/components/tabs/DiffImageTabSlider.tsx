@@ -1,7 +1,13 @@
 import { styled } from '@linaria/react'
 import { useState } from 'preact/hooks'
-import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
-import { ImageCaption } from './ImageCaption'
+import {
+  DiffImageTab,
+  DiffImageWrapper,
+  ImageCaption,
+  ImageStack,
+  ImageStackAfterImageWrapper,
+  ImageStackBeforeImageWrapper,
+} from './DiffImageTab'
 
 type DiffImageTabSliderProps = {
   images: [string, string]
@@ -14,27 +20,6 @@ const SliderContainer = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-`
-
-const ImageStack = styled.div`
-  position: relative;
-  display: inline-block;
-  cursor: col-resize;
-  width: 100%;
-`
-
-const BeforeImageWrapper = styled.div`
-  position: relative;
-`
-
-const AfterImageWrapper = styled('div')<{ clipX: number }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  clip-path: ${({ clipX }) => `inset(0 ${100 - clipX}% 0 0)`};
 `
 
 const SliderLine = styled('div')<{ x: number }>`
@@ -64,19 +49,19 @@ export const DiffImageTabSlider = ({ images }: DiffImageTabSliderProps) => {
     <DiffImageTab data-diff-type="slider">
       <SliderContainer>
         <ImageStack onMouseMove={handleMouseMove}>
-          <BeforeImageWrapper>
+          <ImageStackBeforeImageWrapper>
             <DiffImageWrapper data-img-type="before">
               <ImageCaption>Before</ImageCaption>
               <img src={images[0]} />
             </DiffImageWrapper>
-          </BeforeImageWrapper>
+          </ImageStackBeforeImageWrapper>
 
-          <AfterImageWrapper clipX={sliderPosition}>
+          <ImageStackAfterImageWrapper clipX={sliderPosition}>
             <DiffImageWrapper data-img-type="after">
               <ImageCaption>After</ImageCaption>
               <img src={images[1]} />
             </DiffImageWrapper>
-          </AfterImageWrapper>
+          </ImageStackAfterImageWrapper>
 
           <SliderLine x={sliderPosition} />
         </ImageStack>

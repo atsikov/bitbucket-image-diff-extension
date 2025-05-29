@@ -1,32 +1,17 @@
 import { styled } from '@linaria/react'
-import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
+import {
+  DiffImageTab,
+  DiffImageWrapper,
+  ImageCaption,
+  ImageStack,
+  ImageStackAfterImageWrapper,
+  ImageStackBeforeImageWrapper,
+} from './DiffImageTab'
 import { useState } from 'preact/hooks'
-import { ImageCaption } from './ImageCaption'
 
 type DiffImageTabOverlayProps = {
   images: [string, string]
 }
-
-const ImageStack = styled.div`
-  position: relative;
-  display: inline-block;
-  cursor: col-resize;
-  width: 100%;
-`
-
-const BeforeImageWrapper = styled.div`
-  position: relative;
-`
-
-const AfterImageWrapper = styled('div')<{ overlayOpacity: number }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  opacity: ${({ overlayOpacity }) => overlayOpacity};
-`
 
 const OverlayAlphaSliderContainer = styled.div`
   width: 100%;
@@ -64,19 +49,19 @@ export const DiffImageTabOverlay = ({ images }: DiffImageTabOverlayProps) => {
       </OverlayAlphaSliderContainer>
 
       <ImageStack>
-        <BeforeImageWrapper>
+        <ImageStackBeforeImageWrapper>
           <DiffImageWrapper data-img-type="before">
             <ImageCaption />
             <img src={images[0]} />
           </DiffImageWrapper>
-        </BeforeImageWrapper>
+        </ImageStackBeforeImageWrapper>
 
-        <AfterImageWrapper overlayOpacity={overlayOpacity}>
+        <ImageStackAfterImageWrapper overlayOpacity={overlayOpacity}>
           <DiffImageWrapper data-img-type="after">
             <ImageCaption />
             <img src={images[1]} />
           </DiffImageWrapper>
-        </AfterImageWrapper>
+        </ImageStackAfterImageWrapper>
       </ImageStack>
     </DiffImageTab>
   )

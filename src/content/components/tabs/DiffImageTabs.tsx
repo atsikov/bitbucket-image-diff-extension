@@ -6,9 +6,8 @@ import { DiffImageTabDifference } from './DiffImageTabDifference'
 import { DiffImageTabOverlay } from './DiffImageTabOverlay'
 import { DiffImageTabSlider } from './DiffImageTabSlider'
 import { TabBar } from './TabBar'
-import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
+import { DiffImageTab, DiffImageWrapper, ImageCaption } from './DiffImageTab'
 import { DiffImageStats } from './DiffImageStats'
-import { ImageCaption } from './ImageCaption'
 
 const TabContainer = styled('div')<{ visible: boolean }>`
   width: 100%;
