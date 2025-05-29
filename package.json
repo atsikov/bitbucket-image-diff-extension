@@ -1,6 +1,6 @@
 {
   "name": "bitbucket-image-diff-extension",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Chrome extension do compare changed images in Bitbucket pull requests",
   "repository": "https://github.com/atsikov/bitbucket-image-diff-extension",
   "author": "Aleksei Tsikov <alexey.tsikov@gmail.com>",
