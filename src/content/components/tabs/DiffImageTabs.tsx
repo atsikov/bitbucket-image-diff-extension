@@ -4,6 +4,7 @@ import { DEFAULT_SELECTED_TAB, TAB_LABELS } from '../../constants'
 import { createDiffCanvasAndStats, ImageDiffData } from '../../diff/diff-canvas'
 import { DiffImageTabDifference } from './DiffImageTabDifference'
 import { DiffImageTabOverlay } from './DiffImageTabOverlay'
+import { DiffImageTabSlider } from './DiffImageTabSlider'
 import { TabBar } from './TabBar'
 import { DiffImageTab, DiffImageWrapper } from './DiffImageTab'
 import { DiffImageStats } from './DiffImageStats'
@@ -53,7 +54,7 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
         options={TAB_BAR_OPTIONS}
         defaultTab={DEFAULT_SELECTED_TAB}
         disabledTabs={
-          imageDiffData?.diffImage ? [] : ['tab-difference', 'tab-overlay']
+          imageDiffData?.diffImage ? [] : ['tab-difference', 'tab-overlay', 'tab-slider']
         }
         onChange={(tabId) => {
           setSelectedTab(tabId)
@@ -81,6 +82,10 @@ export const DiffImageTabs = ({ images }: ImageDiffTabsProps) => {
 
       <TabContainer visible={selectedTab === 'tab-overlay'}>
         <DiffImageTabOverlay images={images} />
+      </TabContainer>
+
+      <TabContainer visible={selectedTab === 'tab-slider'}>
+        <DiffImageTabSlider images={images} />
       </TabContainer>
 
       {imageDiffData && <DiffImageStats imageDiffData={imageDiffData} />}

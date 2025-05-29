@@ -11,20 +11,23 @@ export const TAB_LABELS: [TabId, string][] = [
   ['tab-side-by-side', 'Side by side'],
   ['tab-difference', 'Difference'],
   ['tab-overlay', 'Overlay'],
+  ['tab-slider', 'Slider'],
 ]
 
-type TabContainerIdKey = 'sideBySide' | 'difference' | 'overlay'
+type TabContainerIdKey = 'sideBySide' | 'difference' | 'overlay' | 'slider'
 
 export const TAB_CONTAINER_IDS: Record<TabContainerIdKey, TabContainerId> = {
   sideBySide: 'diff-side-by-side',
   difference: 'diff-difference',
   overlay: 'diff-overlay',
+  slider: 'diff-slider',
 }
 
 export const TAB_CONTAINERS_BY_TAB: Record<TabId, TabContainerId> = {
   'tab-side-by-side': 'diff-side-by-side',
   'tab-difference': 'diff-difference',
   'tab-overlay': 'diff-overlay',
+  'tab-slider': 'diff-slider',
 }
 
 export enum ElementId {
