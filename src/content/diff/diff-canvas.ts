@@ -149,7 +149,7 @@ export async function calculateImageDiff(
   )
 
   const numDifferentPixels = imageDiffPixels.filter(
-    (pixel) => pixel === undefined,
+    (pixel) => pixel !== undefined,
   ).length
 
   const differentPixelsRatio = numDifferentPixels / imageBeforePixels.length
