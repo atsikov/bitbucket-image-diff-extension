@@ -1,7 +1,8 @@
 import { TabContainerId, TabId } from './types'
 
-export const PR_CHANGED_IMAGE_SELECTOR =
-  '[data-testid="file-content"] [data-testid="image-diff"] img'
+export const PR_FILE_CONTENT_SELECTOR = '[data-testid="file-content"]'
+
+export const PR_CHANGED_IMAGE_SELECTOR = '[data-testid="image-diff"] img'
 
 export const DEFAULT_SELECTED_TAB: TabId = 'tab-side-by-side'
 

@@ -7,7 +7,11 @@ import {
   useRef,
   useState,
 } from 'preact/hooks'
-import { ElementId, PR_CHANGED_IMAGE_SELECTOR } from '../constants'
+import {
+  ElementId,
+  PR_CHANGED_IMAGE_SELECTOR,
+  PR_FILE_CONTENT_SELECTOR,
+} from '../constants'
 import { Overlay } from './Overlay'
 
 const ExtensionContainer = styled.div`
@@ -74,13 +78,6 @@ export const Content = () => {
       return
     }
 
-    const body = imagesContainer.ownerDocument.body
-    bodyOverflowStyles.current = {
-      overflow: body.style.overflow,
-      overflowX: body.style.overflowX,
-      overflowY: body.style.overflowY,
-    }
-
     const targetRow = event
       .composedPath()
       .find(
@@ -101,6 +98,13 @@ export const Content = () => {
 
     if (imagesUrls.length !== 2) {
       return
+    }
+
+    const body = imagesContainer.ownerDocument.body
+    bodyOverflowStyles.current = {
+      overflow: body.style.overflow,
+      overflowX: body.style.overflowX,
+      overflowY: body.style.overflowY,
     }
 
     imagesContainer.style.overflow = 'hidden'
@@ -131,16 +135,27 @@ export const Content = () => {
     }
 
     const onElementAdded = () => {
-      imagesContainer
-        .querySelectorAll<HTMLImageElement>(PR_CHANGED_IMAGE_SELECTOR)
-        .forEach((element) => {
-          if (element.getAttribute('data-image-diff-listener') !== 'true') {
-            element.addEventListener('click', openDiffOverlay)
-            element.style.cursor = 'pointer'
+      const fileContentRows =
+        imagesContainer.querySelectorAll<HTMLImageElement>(
+          PR_FILE_CONTENT_SELECTOR,
+        )
+      fileContentRows.forEach((row) => {
+        const images = row.querySelectorAll<HTMLImageElement>(
+          PR_CHANGED_IMAGE_SELECTOR,
+        )
+        if (images.length !== 2) {
+          return
+        }
 
-            element.setAttribute('data-image-diff-listener', 'true')
+        images.forEach((image) => {
+          if (image.getAttribute('data-image-diff-listener') !== 'true') {
+            image.addEventListener('click', openDiffOverlay)
+            image.style.cursor = 'pointer'
+
+            image.setAttribute('data-image-diff-listener', 'true')
           }
         })
+      })
     }
 
     onElementAdded()
